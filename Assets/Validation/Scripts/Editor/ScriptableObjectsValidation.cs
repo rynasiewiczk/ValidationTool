@@ -10,19 +10,24 @@ namespace LazySloth.Validation
         [MenuItem("Validation/ScriptableObjects")]
         public static void RunValidation()
         {
+            RunValidation(ValidationHelper.Config.ProjectMainFolderPath, ValidationHelper.Config.OutOfValidationPaths);
+        }
+
+        public static void RunValidation(string startPath, List<string> ignorePaths)
+        {
             var result = new ValidationResult("<b>SO Validation</b>");
             var instance = new ScriptableObjectsValidation();
-            instance.Validate(result, ValidationHelper.Config.ProjectMainFolderPath);
+            instance.Validate(result, startPath, ignorePaths);
             
             result.Print();
         }
 
         [ValidateMethod]
-        protected override void Validate(ValidationResult result, string startPath)
+        protected override void Validate(ValidationResult result, string startPath, List<string> ignorePaths)
         {
             var paths = EditorHelper.GetAssetsPathsByFilter(ValidationConfig.SO_FILTER_KEY,
                 startPath,
-                ValidationHelper.Config.OutOfValidationPaths);
+                ignorePaths);
             var allSo = new List<ScriptableObject>();
 
             for (int i = 0; i < paths.Count; i++)
@@ -50,7 +55,7 @@ namespace LazySloth.Validation
 
                     if (EditorHelper.UnityObjectIsNull(instanceData.Instance))
                     {
-                        var soName = instanceData?.Object != null ? instanceData.Object.ToString() : "";
+                        var soName = instanceData?.Obj != null ? instanceData.Obj.ToString() : "";
                         var soNameLog = string.IsNullOrEmpty(soName)
                             ? ""
                             : $"ScriptableObject name: {soName}\n";

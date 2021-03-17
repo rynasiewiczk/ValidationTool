@@ -2,7 +2,6 @@ namespace LazySloth.Validation
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Reflection;
     using UnityEditor;
     using UnityEngine;
@@ -21,7 +20,8 @@ namespace LazySloth.Validation
             foreach (var validationMethod in validationMethods)
             {
                 var instance = Activator.CreateInstance(validationMethod.DeclaringType);
-                validationMethod.Invoke(instance, new object[] { result, ValidationHelper.Config.ProjectMainFolderPath });
+                validationMethod.Invoke(instance, new object[] 
+                { result, ValidationHelper.Config.ProjectMainFolderPath, ValidationHelper.Config.OutOfValidationPaths });
             }
 
             result.Print();

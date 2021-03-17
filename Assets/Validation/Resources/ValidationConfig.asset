@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxNumberOfValidationResults: 100
   ProjectMainFolderPath: Assets/
-  OutOfValidationPaths: []
+  OutOfValidationPaths:
+  - Assets/Validation/Tests
   OutOfValidationComponentTypes: []
   OutOfValidationNamespaces:
   - UnityEngine
   - TMPro
-  OutOfValidationSceneNames:
-  - LevelEditor
+  OutOfValidationSceneNames: []

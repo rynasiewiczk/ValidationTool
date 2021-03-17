@@ -19,29 +19,35 @@ namespace LazySloth.Validation
         private static readonly List<Type> LocalizationComponentTypes = new List<Type>
             {typeof(LocalizedTextMarker), typeof(NotLocalizedTextMarker), typeof(ScriptLocalizedTextMarker)};
 
+
         [MenuItem("Validation/Localization")]
         public static void RunValidation()
         {
+            RunValidation(ValidationHelper.Config.ProjectMainFolderPath, ValidationHelper.Config.OutOfValidationPaths);
+        }
+
+        public static void RunValidation(string startPath, List<string> ignorePaths)
+        {
             var result = new ValidationResult("<b>LocalizationValidation</b>");
             var instance = new LocalizationValidation();
-            instance.Validate(result, ValidationHelper.Config.ProjectMainFolderPath);
+            instance.Validate(result, startPath, ignorePaths);
 
             result.Print();
         }
 
         //[ValidateMethod] ignore localization validation in full-validation process until there is proper localization
-        protected override void Validate(ValidationResult result, string startPath)
+        protected override void Validate(ValidationResult result, string startPath, List<string > ignorePaths)
         {
-            ValidateTextsInScenes(result, startPath);
-            ValidateTextsInPrefabs(result, startPath);
+            ValidateTextsInScenes(result, startPath, ignorePaths);
+            ValidateTextsInPrefabs(result, startPath, ignorePaths);
         }
 
-        private static void ValidateTextsInScenes(ValidationResult result, string startPath)
+        private static void ValidateTextsInScenes(ValidationResult result, string startPath, List<string> ignorePaths)
         {
             var currentScenePath = SceneManager.GetActiveScene().path;
             var scenePaths = EditorHelper.GetAssetsPathsByFilter(ValidationConfig.SCENES_FILTER_KEY,
                 startPath,
-                ValidationHelper.Config.OutOfValidationPaths);
+                ignorePaths);
 
             scenePaths = scenePaths.Where(x => !ValidationHelper.Config.OutOfValidationSceneNames.Any(y => x.Contains(y))).ToList();
             
@@ -94,11 +100,11 @@ namespace LazySloth.Validation
             EditorSceneManager.OpenScene(currentScenePath);
         }
 
-        private static void ValidateTextsInPrefabs(ValidationResult result, string startPath)
+        private static void ValidateTextsInPrefabs(ValidationResult result, string startPath, List<string> ignorePaths)
         {
             var prefabPaths = EditorHelper.GetAssetsPathsByFilter(ValidationConfig.PREFABS_FILTER_KEY,
                 startPath,
-                ValidationHelper.Config.OutOfValidationPaths);
+                ignorePaths);
 
             var abstractPaths = prefabPaths.Where(x => x.Contains("Abstract")).ToList();
             foreach (var abstractPath in abstractPaths)

@@ -1,6 +1,7 @@
 ﻿namespace LazySloth.Validation
 {
     using System;
+    using System.Collections.Generic;
     using UnityEditor;
     using UnityEngine;
 
@@ -30,7 +31,7 @@
             foreach (var validationMethod in validationMethods)
             {
                 var instance = Activator.CreateInstance(validationMethod.DeclaringType);
-                validationMethod.Invoke(instance, new object[] { result, Config.TestFolderPath });
+                validationMethod.Invoke(instance, new object[] { result, Config.TestFolderPath, new List<string>() });
             }
 
             result.Print();
@@ -39,7 +40,7 @@
         [MenuItem("Validation/Tests/Run tests for scenes")]
         private static void RunTests_Scenes()
         {
-            ScenesValidation.RunValidation();
+            ScenesValidation.RunValidation(Config.TestFolderPath, new List<string>());
         }
 
         [MenuItem("Validation/Tests/Run tests for prefabs")]

@@ -13,20 +13,25 @@ namespace LazySloth.Validation
         [MenuItem("Validation/Scenes")]
         public static void RunValidation()
         {
+            RunValidation(ValidationHelper.Config.ProjectMainFolderPath, ValidationHelper.Config.OutOfValidationPaths);
+        }
+
+        public static void RunValidation(string startPath, List<string> ignorePaths)
+        {
             var result = new ValidationResult("<b>ScenesValidation</b>");
             var instance = new ScenesValidation();
-            instance.Validate(result, ValidationHelper.Config.ProjectMainFolderPath);
+            instance.Validate(result, startPath, ignorePaths);
 
             result.Print();
         }
 
         [ValidateMethod]
-        protected override void Validate(ValidationResult result, string startPath)
+        protected override void Validate(ValidationResult result, string startPath, List<string> ignorePaths)
         {
             var currentScenePath = SceneManager.GetActiveScene().path;
             var scenePaths = EditorHelper.GetAssetsPathsByFilter(ValidationConfig.SCENES_FILTER_KEY,
                 startPath,
-                ValidationHelper.Config.OutOfValidationPaths);
+                ignorePaths);
 
             scenePaths = scenePaths.Where(x => !ValidationHelper.Config.OutOfValidationSceneNames.Any(y => x.Contains(y))).ToList();
             
@@ -51,7 +56,7 @@ namespace LazySloth.Validation
                 foreach (var instanceData in fieldInstanceData)
                 {
                     if (uniqueInstanceData.Any(x =>
-                        x.Instance == instanceData.Instance && x.FieldInfo == instanceData.FieldInfo))
+                        x.Instance == instanceData.Instance && x.FieldInfo == instanceData.FieldInfo && x.Obj == instanceData.Obj))
                     {
                         continue;
                     }

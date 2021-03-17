@@ -5,7 +5,10 @@ namespace LazySloth.Validation
 
     public class FieldInstanceData
     {
-        public readonly object Object;
+        /// <summary>
+        /// Source object
+        /// </summary>
+        public readonly object Obj;
         
         /// <summary>
         /// Metadata about the field instance
@@ -22,9 +25,9 @@ namespace LazySloth.Validation
         /// </summary>
         public readonly object Instance;
 
-        public FieldInstanceData(object @object, FieldInfo fieldInfo, Component component, object instance)
+        public FieldInstanceData(object obj, FieldInfo fieldInfo, Component component, object instance)
         {
-            Object = @object;
+            Obj = obj;
             FieldInfo = fieldInfo;
             Component = component;
             Instance = instance;

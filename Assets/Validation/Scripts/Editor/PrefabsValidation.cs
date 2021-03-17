@@ -11,19 +11,24 @@ namespace LazySloth.Validation
         [MenuItem("Validation/Prefabs")]
         public static void RunValidation()
         {
+            RunValidation(ValidationHelper.Config.ProjectMainFolderPath, ValidationHelper.Config.OutOfValidationPaths);
+        }
+
+        public static void RunValidation(string startPath, List<string> ignorePaths)
+        {
             var result = new ValidationResult("<b>PrefabsValidation</b>");
             var instance = new PrefabsValidation();
-            instance.Validate(result, ValidationHelper.Config.ProjectMainFolderPath);
+            instance.Validate(result, startPath, ignorePaths);
 
             result.Print();
         }
 
         [ValidateMethod]
-        protected override void Validate(ValidationResult result, string startPath)
+        protected override void Validate(ValidationResult result, string startPath, List<string> ignorePaths)
         {
             var prefabPaths = EditorHelper.GetAssetsPathsByFilter(ValidationConfig.PREFABS_FILTER_KEY,
                 startPath,
-                ValidationHelper.Config.OutOfValidationPaths);
+                ignorePaths);
 
             //todo: chanfe 'Contains' to 'EndsWith'?
             var abstractPaths = prefabPaths.Where(x => x.Contains("Abstract")).ToList();
@@ -48,7 +53,7 @@ namespace LazySloth.Validation
             {
                 foreach (var instanceData in fieldInstanceData)
                 {
-                    EditorUtility.DisplayProgressBar("Validate Prefabs", instanceData.Object.ToString(),
+                    EditorUtility.DisplayProgressBar("Validate Prefabs", instanceData.Obj.ToString(),
                         (float) fieldInstanceData.IndexOf(instanceData) / fieldInstanceData.Count);
                     if (EditorHelper.UnityObjectIsNull(instanceData.Instance))
                     {
@@ -58,7 +63,7 @@ namespace LazySloth.Validation
                             $"Component name: {instanceData.Component.GetType()}\n" +
                             $"Field type: {instanceData.FieldInfo.FieldType}\n" +
                             $"Field name: {instanceData.FieldInfo.Name}\n" +
-                            $"(Game)Object name: {(instanceData.Object is GameObject go ? go.name : instanceData.Object)}\n";
+                            $"(Game)Object name: {(instanceData.Obj is GameObject go ? go.name : instanceData.Obj)}\n";
 
                         result.Add(log, instanceData.Component, instanceData.FieldInfo);
                     }

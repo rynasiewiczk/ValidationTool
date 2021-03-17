@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8124227752714765277}
-  - component: {fileID: 6334531325281093841}
+  - component: {fileID: -5740713040287865852}
   m_Layer: 0
-  m_Name: SceneReferencePrefab
+  m_Name: ScenesValidationTestPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6334531325281093841
+--- !u!114 &-5740713040287865852
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,5 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fd396cb559942043a88f33ab56d0041, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _providedGameObject: {fileID: 6561891323898118371}
+  _providedGameObject: {fileID: 0}
   _missingGameObject: {fileID: 0}
+  _providedReference: {fileID: 0}
+  _missingReference: {fileID: 0}

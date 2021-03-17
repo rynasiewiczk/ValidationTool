@@ -6,5 +6,8 @@
     {
         [SerializeField] private GameObject _providedGameObject = default;
         [SerializeField] private GameObject _missingGameObject = default;
+
+        [SerializeField] private ValidationTestReferenceObject _providedReference = default;
+        [SerializeField] private ValidationTestReferenceObject _missingReference = default;
     }
 }
