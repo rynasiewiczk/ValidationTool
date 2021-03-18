@@ -1,5 +1,6 @@
 namespace LazySloth.Validation
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
@@ -8,33 +9,34 @@ namespace LazySloth.Validation
     public class ValidationResult
     {
         private readonly string _validationMethodName;
-        private readonly List<ValidationError> _validationErrors = new List<ValidationError>();
+        public readonly List<ValidationError> ValidationErrors = new List<ValidationError>();
+
+        public int ErrorsCount => ValidationErrors.Count;
+        public bool Success => ErrorsCount == 0;
 
         public ValidationResult(string name)
         {
             _validationMethodName = name;
         }
 
-        public bool Success => _validationErrors.Count == 0;
-
-        public void Add(string message, object obj = null, MemberInfo memberInfo = null)
+        public void Add(Type validationType, string message, object obj = null, MemberInfo memberInfo = null)
         {
-            var error = new ValidationError(obj, memberInfo, message);
-            _validationErrors.Add(error);
+            var error = new ValidationError(validationType, obj, memberInfo, message);
+            ValidationErrors.Add(error);
         }
 
         public override string ToString()
         {
-            var errorsCount = _validationErrors.Count;
+            var errorsCount = ValidationErrors.Count;
             var result = Success
                 ? $"<color=green>{_validationMethodName}: no errors</color>"
-                : $"<color=red>{_validationMethodName}: {errorsCount.ToString()} errors.</color>";
+                : $"<color=red>{_validationMethodName}: {errorsCount} errors.</color>";
             return result;
         }
 
         public List<string> GetLogs()
         {
-            return _validationErrors.Select(validationError => validationError.ToString()).ToList();
+            return ValidationErrors.Select(validationError => validationError.ToString()).ToList();
         }
     }
 

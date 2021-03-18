@@ -38,7 +38,7 @@ namespace LazySloth.Validation
                 var asset = AssetDatabase.LoadAssetAtPath<ScriptableObject>(paths[i]);
                 if (asset == null)
                 {
-                    result.Add($"Asset at path {paths[i]} is not a valid ScriptableObject");
+                    result.Add(GetType(), $"Asset at path {paths[i]} is not a valid ScriptableObject");
                 }
                 else
                 {
@@ -70,7 +70,7 @@ namespace LazySloth.Validation
                             $"Field type: {instanceData.FieldInfo.FieldType}\n" +
                             $"Field name: {instanceData.FieldInfo.Name}\n";
 
-                        result.Add(log, instanceData.Component, instanceData.FieldInfo);
+                        result.Add(GetType(), log, instanceData.Component, instanceData.FieldInfo);
                     }
                 }
             }

@@ -1,17 +1,20 @@
 namespace LazySloth.Validation
 {
+    using System;
     using System.Collections.Generic;
     using System.Reflection;
     using UnityEngine;
 
     public class ValidationError
     {
+        public Type ValidationType { get; }
         private readonly string _objectName;
         private readonly string _fieldName;
         private readonly string _message;
 
-        public ValidationError(object obj, MemberInfo fieldName, string message)
+        public ValidationError(Type validationType, object obj, MemberInfo fieldName, string message)
         {
+            ValidationType = validationType;
             _objectName = GetObjectsName(obj);
             _fieldName = fieldName != null ? $"{fieldName.DeclaringType}.{fieldName.Name}" : null;
             _message = message;
@@ -38,7 +41,7 @@ namespace LazySloth.Validation
 
                 nameWithHierarchy = string.Join(".", objectsHierarchy);
             }
-            else if (obj is Object unityObject)
+            else if (obj is UnityEngine.Object unityObject)
             {
                 nameWithHierarchy = unityObject.name;
             }

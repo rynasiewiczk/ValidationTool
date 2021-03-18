@@ -23,7 +23,7 @@
         }
 
         [MenuItem("Validation/Tests/Run tests %#&v")]
-        private static void RunTests()
+        public static ValidationResult RunTests()
         {
             var result = new ValidationResult("<b>Validation test run</b>");
 
@@ -35,6 +35,7 @@
             }
 
             result.Print();
+            return result;
         }
 
         [MenuItem("Validation/Tests/Run tests for scenes")]
