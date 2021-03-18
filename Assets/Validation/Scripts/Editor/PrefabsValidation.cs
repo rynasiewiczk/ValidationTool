@@ -11,15 +11,18 @@ namespace LazySloth.Validation
         [MenuItem("Validation/Prefabs")]
         public static void RunValidation()
         {
-            RunValidation(ValidationHelper.Config.ProjectMainFolderPath, ValidationHelper.Config.OutOfValidationPaths);
+            var instance = new PrefabsValidation();
+            instance.RunValidation(ValidationHelper.Config.ProjectMainFolderPath, ValidationHelper.Config.OutOfValidationPaths);
         }
 
-        public static void RunValidation(string startPath, List<string> ignorePaths)
+        public override void RunValidation(string startPath, List<string> ignorePaths, ValidationResult result = null)
         {
-            var result = new ValidationResult("<b>PrefabsValidation</b>");
-            var instance = new PrefabsValidation();
-            instance.Validate(result, startPath, ignorePaths);
-
+            if (result == null)
+            {
+                result = new ValidationResult("<b>PrefabsValidation</b>");
+            }
+            
+            Validate(result, startPath, ignorePaths);
             result.Print();
         }
 

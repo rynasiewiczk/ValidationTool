@@ -15,3 +15,7 @@ MonoBehaviour:
   _sceneErrorsExpectedCount: 1
   _prefabErrorsExpectedCount: 1
   _scriptableObjectExpectedCount: 1
+  _mainTestFolderPath: Assets/Validation/Tests
+  _scenesTestFolderPath: Assets/Validation/Tests/ScenesTest
+  _prefabsTestFolderPath: Assets/Validation/Tests/PrefabsTest
+  _soTestFolderPath: Assets/Validation/Tests/SOTest

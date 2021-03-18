@@ -13,15 +13,18 @@ namespace LazySloth.Validation
         [MenuItem("Validation/Scenes")]
         public static void RunValidation()
         {
-            RunValidation(ValidationHelper.Config.ProjectMainFolderPath, ValidationHelper.Config.OutOfValidationPaths);
+            var instance = new ScenesValidation();
+            instance.RunValidation(ValidationHelper.Config.ProjectMainFolderPath, ValidationHelper.Config.OutOfValidationPaths);
         }
 
-        public static void RunValidation(string startPath, List<string> ignorePaths)
+        public override void RunValidation(string startPath, List<string> ignorePaths, ValidationResult result = null)
         {
-            var result = new ValidationResult("<b>ScenesValidation</b>");
-            var instance = new ScenesValidation();
-            instance.Validate(result, startPath, ignorePaths);
+            if (result == null)
+            {
+                result = new ValidationResult("<b>ScenesValidation</b>");
+            }
 
+            Validate(result, startPath, ignorePaths);
             result.Print();
         }
 

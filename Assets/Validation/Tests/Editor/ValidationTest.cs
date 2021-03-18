@@ -1,4 +1,4 @@
-﻿namespace LazySloth.Validation
+﻿namespace LazySloth.Validation.Test
 {
     using System;
     using System.Collections.Generic;
@@ -31,7 +31,7 @@
             foreach (var validationMethod in validationMethods)
             {
                 var instance = Activator.CreateInstance(validationMethod.DeclaringType);
-                validationMethod.Invoke(instance, new object[] { result, Config.TestFolderPath, new List<string>() });
+                validationMethod.Invoke(instance, new object[] { result, Config.GetFolderPath(), new List<string>() });
             }
 
             result.Print();
@@ -40,19 +40,22 @@
         [MenuItem("Validation/Tests/Run tests for scenes")]
         private static void RunTests_Scenes()
         {
-            ScenesValidation.RunValidation(Config.TestFolderPath, new List<string>());
+            var instance = new ScenesValidation();
+            instance.RunValidation(Config.GetFolderPath(), new List<string>());
         }
 
         [MenuItem("Validation/Tests/Run tests for prefabs")]
         private static void RunTests_Prefabs()
         {
-            PrefabsValidation.RunValidation();
+            var instance = new PrefabsValidation();
+            instance.RunValidation(Config.GetFolderPath(), new List<string>());
         }
 
         [MenuItem("Validation/Tests/Run tests for SOs")]
         private static void RunTests_ScriptableObjects()
         {
-            ScriptableObjectsValidation.RunValidation();
+            var instance = new ScriptableObjectsValidation();
+            instance.RunValidation(Config.GetFolderPath(), new List<string>());
         }
     }
 }

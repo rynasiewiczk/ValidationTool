@@ -202,6 +202,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScenesValidationTestPrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 6561891323898118371, guid: 89d714809756ca64cb8ccc7dcfdb6bec,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8124227752714765277, guid: 89d714809756ca64cb8ccc7dcfdb6bec,
         type: 3}
       propertyPath: m_LocalPosition.x

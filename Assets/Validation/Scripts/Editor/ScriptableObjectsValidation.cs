@@ -10,15 +10,18 @@ namespace LazySloth.Validation
         [MenuItem("Validation/ScriptableObjects")]
         public static void RunValidation()
         {
-            RunValidation(ValidationHelper.Config.ProjectMainFolderPath, ValidationHelper.Config.OutOfValidationPaths);
+            var instance = new ScriptableObjectsValidation();
+            instance.RunValidation(ValidationHelper.Config.ProjectMainFolderPath, ValidationHelper.Config.OutOfValidationPaths);
         }
 
-        public static void RunValidation(string startPath, List<string> ignorePaths)
+        public override void RunValidation(string startPath, List<string> ignorePaths, ValidationResult result = null)
         {
-            var result = new ValidationResult("<b>SO Validation</b>");
-            var instance = new ScriptableObjectsValidation();
-            instance.Validate(result, startPath, ignorePaths);
+            if (result == null)
+            {
+                result = new ValidationResult("<b>SO Validation</b>");
+            }
             
+            Validate(result, startPath, ignorePaths);
             result.Print();
         }
 
