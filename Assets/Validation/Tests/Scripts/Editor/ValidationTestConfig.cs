@@ -2,7 +2,7 @@
 {
     using UnityEngine;
 
-    [CreateAssetMenu(fileName = "ValidationTestConfig", menuName = "Validation/TestConfig")]
+    [CreateAssetMenu(fileName = "ValidationTestConfig", menuName = "Validation/Test/Config")]
     public class ValidationTestConfig : ScriptableObject
     {
         private const string _resourcesFolderNameAndSlash = "Resources/";
