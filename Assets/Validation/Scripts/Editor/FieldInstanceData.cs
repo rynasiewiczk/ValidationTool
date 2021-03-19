@@ -1,5 +1,6 @@
 namespace LazySloth.Validation
 {
+    using System.Collections.Generic;
     using System.Reflection;
     using UnityEngine;
 
@@ -25,12 +26,25 @@ namespace LazySloth.Validation
         /// </summary>
         public readonly object Instance;
 
-        public FieldInstanceData(object obj, FieldInfo fieldInfo, Component component, object instance)
+        public IReadOnlyList<object> Stack = new List<object>();
+
+        public FieldInstanceData(Component component, MemberInfoWithValue fieldData)
+        {
+            Obj = fieldData.Object;
+            FieldInfo = fieldData.MemberInfo as FieldInfo;
+            Component = component;
+            Instance = fieldData.Value;
+            Stack = fieldData.Stack;
+        }
+
+        public FieldInstanceData(object obj, FieldInfo fieldInfo, Component component, object instance, List<object> stack)
         {
             Obj = obj;
             FieldInfo = fieldInfo;
             Component = component;
             Instance = instance;
+            
+            Stack = stack;
         }
 
     }

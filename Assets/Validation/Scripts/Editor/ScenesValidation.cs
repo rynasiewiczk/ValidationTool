@@ -45,7 +45,7 @@ namespace LazySloth.Validation
                 var scene = EditorSceneManager.OpenScene(scenePath);
                 if (!scene.IsValid())
                 {
-                    Debug.Log($"Invalid Scenes: {scene.path}");
+                    Debug.Log($"Invalid scene: {scene.path}");
                     continue;
                 }
 
@@ -81,7 +81,7 @@ namespace LazySloth.Validation
                                 $"Field type: {instanceData.FieldInfo.FieldType}\n" +
                                 $"Field name: {instanceData.FieldInfo.Name}\n";
 
-                            result.Add(GetType(), log, instanceData.Component, instanceData.FieldInfo);
+                            result.Add(GetType(), log, instanceData);
                         }
                     }
                 }

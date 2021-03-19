@@ -70,7 +70,7 @@ namespace LazySloth.Validation
                             $"Field type: {instanceData.FieldInfo.FieldType}\n" +
                             $"Field name: {instanceData.FieldInfo.Name}\n";
 
-                        result.Add(GetType(), log, instanceData.Component, instanceData.FieldInfo);
+                        result.Add(GetType(), log, instanceData);
                     }
                 }
             }

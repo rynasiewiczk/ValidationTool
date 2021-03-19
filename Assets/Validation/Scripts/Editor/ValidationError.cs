@@ -2,6 +2,7 @@ namespace LazySloth.Validation
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Reflection;
     using UnityEngine;
 
@@ -12,12 +13,24 @@ namespace LazySloth.Validation
         private readonly string _fieldName;
         private readonly string _message;
 
-        public ValidationError(Type validationType, object obj, MemberInfo fieldName, string message)
+        public IReadOnlyList<object> Stack;
+
+        public ValidationError(Type validationType, object obj, IReadOnlyList<object> stack, MemberInfo memberInfo, string message)
         {
             ValidationType = validationType;
-            _objectName = GetObjectsName(obj);
-            _fieldName = fieldName != null ? $"{fieldName.DeclaringType}.{fieldName.Name}" : null;
             _message = message;
+            Stack = stack;
+            _objectName = GetObjectsName(obj);
+            _fieldName = memberInfo != null ? $"{memberInfo.DeclaringType}.{memberInfo.Name}" : null;
+        }
+
+        public ValidationError(Type validationType, string message, FieldInstanceData data)
+        {
+            ValidationType = validationType;
+            _message = message;
+            Stack = data != null ? data.Stack : new List<object>();
+            _objectName = GetObjectsName(data?.Obj);
+            _fieldName = data?.FieldInfo != null ? $"{data.FieldInfo.DeclaringType}.{data.FieldInfo.Name}" : null;
         }
 
         private static string GetObjectsName(object obj)
@@ -53,10 +66,26 @@ namespace LazySloth.Validation
             return nameWithHierarchy;
         }
 
+        public string GetStack()
+        {
+            var result = "";
+            foreach(var s in Stack)
+            {
+                result += s.ToString();
+
+                if (Stack.Last() != s)
+                {
+                    result += "/";
+                }
+            }
+
+            return result;
+        }
+
         public override string ToString()
         {
-            var obj = string.IsNullOrEmpty(_objectName) ? "" : $"{_objectName} | ";
-            var field = string.IsNullOrEmpty(_fieldName) ? "" : $"{_fieldName} | ";
+            var obj = string.IsNullOrEmpty(_objectName) ? "" : $"{_objectName} -> ";
+            var field = string.IsNullOrEmpty(_fieldName) ? "" : $"{_fieldName} -> ";
             return $"{obj}{field}{_message}";
         }
     }

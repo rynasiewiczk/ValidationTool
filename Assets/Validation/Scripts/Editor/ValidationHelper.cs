@@ -14,11 +14,14 @@ namespace LazySloth.Validation
         public readonly MemberInfo MemberInfo;
         public readonly object Value;
 
-        public MemberInfoWithValue(object @object, MemberInfo memberInfo, object value)
+        public readonly List<object> Stack = new List<object>();
+
+        public MemberInfoWithValue(object @object, MemberInfo memberInfo, object value, List<object> stack)
         {
             Object = @object;
             MemberInfo = memberInfo;
             Value = value;
+            Stack = stack;
         }
     }
 
@@ -58,13 +61,12 @@ namespace LazySloth.Validation
                     continue;
                 }
 
-                visibleFields = GetFieldsVisibleInInspectorRecursive(so, visibleFields);
+                visibleFields = GetFieldsVisibleInInspectorRecursive(so, visibleFields, new List<object>());
                 var fields = currentVisibleFields;
                 var newVisibleFields = visibleFields.Where(x => !fields.Contains(x));
                 foreach (var fieldData in newVisibleFields)
                 {
-                    fieldInstanceData.Add(new FieldInstanceData(so, fieldData.MemberInfo as FieldInfo, null,
-                        fieldData.Value));
+                    fieldInstanceData.Add(new FieldInstanceData(so, fieldData.MemberInfo as FieldInfo, null, fieldData.Value, fieldData.Stack));
                 }
 
                 currentVisibleFields = new List<MemberInfoWithValue>(visibleFields);
@@ -101,12 +103,11 @@ namespace LazySloth.Validation
 
                 processedComponents.Add(component);
 
-                visibleFields = GetFieldsVisibleInInspectorRecursive(component, visibleFields);
+                visibleFields = GetFieldsVisibleInInspectorRecursive(component, visibleFields, new List<object>());
                 foreach (var fieldData in visibleFields)
                 {
                     var componentToUse = fieldData.Object is Component objectsComponent ? objectsComponent : component;
-                    fieldInstanceData.Add(new FieldInstanceData(fieldData.Object, fieldData.MemberInfo as FieldInfo,
-                        componentToUse, fieldData.Value));
+                    fieldInstanceData.Add(new FieldInstanceData(componentToUse, fieldData));
                 }
             }
 
@@ -159,7 +160,7 @@ namespace LazySloth.Validation
         }
 
         private static List<MemberInfoWithValue> GetFieldsVisibleInInspectorRecursive(object obj,
-            List<MemberInfoWithValue> listOfFieldInfos)
+            List<MemberInfoWithValue> listOfFieldInfos, List<object> stack)
         {
             if (obj == null || EditorHelper.UnityObjectIsNull(obj) ||
                 listOfFieldInfos.Any(x => x.Object == obj))
@@ -176,6 +177,8 @@ namespace LazySloth.Validation
             {
                 return listOfFieldInfos;
             }
+
+            stack.Add(obj);
 
             var type = obj.GetType();
             var fieldInfos = MethodsHelper.GetNonStaticFieldInfos(type);
@@ -195,7 +198,7 @@ namespace LazySloth.Validation
                 }
 
 
-                listOfFieldInfos.Add(new MemberInfoWithValue(obj, fieldInfo, fieldValue));
+                listOfFieldInfos.Add(new MemberInfoWithValue(obj, fieldInfo, fieldValue, stack));
 
                 if (type.BaseType != typeof(object) && IsFieldValidateable(fieldInfo))
                 {
@@ -203,12 +206,12 @@ namespace LazySloth.Validation
                     {
                         foreach (var element in list)
                         {
-                            listOfFieldInfos.Add(new MemberInfoWithValue(obj, fieldInfo, element));
-                            listOfFieldInfos = GetFieldsVisibleInInspectorRecursive(fieldValue, listOfFieldInfos);
+                            listOfFieldInfos.Add(new MemberInfoWithValue(obj, fieldInfo, element, stack));
+                            listOfFieldInfos = GetFieldsVisibleInInspectorRecursive(fieldValue, listOfFieldInfos, stack);
                         }
                     }
 
-                    listOfFieldInfos = GetFieldsVisibleInInspectorRecursive(fieldValue, listOfFieldInfos);
+                    listOfFieldInfos = GetFieldsVisibleInInspectorRecursive(fieldValue, listOfFieldInfos, stack);
                 }
             }
 

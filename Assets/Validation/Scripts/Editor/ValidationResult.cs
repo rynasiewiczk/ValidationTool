@@ -19,9 +19,9 @@ namespace LazySloth.Validation
             _validationMethodName = name;
         }
 
-        public void Add(Type validationType, string message, object obj = null, MemberInfo memberInfo = null)
+        public void Add(Type validationType, string message, FieldInstanceData data = null)
         {
-            var error = new ValidationError(validationType, obj, memberInfo, message);
+            var error = new ValidationError(validationType, message, data);
             ValidationErrors.Add(error);
         }
 

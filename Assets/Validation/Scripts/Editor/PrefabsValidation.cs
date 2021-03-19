@@ -68,7 +68,7 @@ namespace LazySloth.Validation
                             $"Field name: {instanceData.FieldInfo.Name}\n" +
                             $"(Game)Object name: {(instanceData.Obj is GameObject go ? go.name : instanceData.Obj)}\n";
 
-                        result.Add(GetType(), log, instanceData.Component, instanceData.FieldInfo);
+                        result.Add(GetType(), log, instanceData);
                     }
                 }
             }
