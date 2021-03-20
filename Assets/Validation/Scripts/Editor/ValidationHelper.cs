@@ -192,13 +192,13 @@ namespace LazySloth.Validation
 
                 var fieldValue = fieldInfo.GetValue(obj);
 
-                if (listOfFieldInfos.Any(x => x.MemberInfo == fieldInfo && x.Value == fieldValue))
+                if (listOfFieldInfos.Any(x => x.MemberInfo == fieldInfo && x.Value == fieldValue && x.Object == obj))
                 {
                     continue;
                 }
 
 
-                listOfFieldInfos.Add(new MemberInfoWithValue(obj, fieldInfo, fieldValue, stack));
+                listOfFieldInfos.Add(new MemberInfoWithValue(obj, fieldInfo, fieldValue, new List<object>(stack)));
 
                 if (type.BaseType != typeof(object) && IsFieldValidateable(fieldInfo))
                 {
@@ -206,7 +206,7 @@ namespace LazySloth.Validation
                     {
                         foreach (var element in list)
                         {
-                            listOfFieldInfos.Add(new MemberInfoWithValue(obj, fieldInfo, element, stack));
+                            listOfFieldInfos.Add(new MemberInfoWithValue(obj, fieldInfo, element, new List<object>(stack)));
                             listOfFieldInfos = GetFieldsVisibleInInspectorRecursive(fieldValue, listOfFieldInfos, stack);
                         }
                     }

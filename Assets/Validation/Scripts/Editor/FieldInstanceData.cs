@@ -1,6 +1,7 @@
 namespace LazySloth.Validation
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Reflection;
     using UnityEngine;
 
@@ -47,5 +48,20 @@ namespace LazySloth.Validation
             Stack = stack;
         }
 
+        public string GetStackLog()
+        {
+            var result = "";
+            foreach (var s in Stack)
+            {
+                result += s.ToString();
+
+                if (Stack.Last() != s)
+                {
+                    result += "<color=red>/</color>";
+                }
+            }
+
+            return result;
+        }
     }
 }

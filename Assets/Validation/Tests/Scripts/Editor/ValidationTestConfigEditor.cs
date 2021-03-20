@@ -39,7 +39,7 @@
                 var prefabResults = _lastRunValidationResults.ValidationErrors.Where(x => x.ValidationType == typeof(PrefabsValidation));
                 var prefabExpectedErrorsCount = instance.PrefabErrorsExpectedCount;
 
-                var soResults = _lastRunValidationResults.ValidationErrors.Where(x => x.ValidationType == typeof(ScriptableObject));
+                var soResults = _lastRunValidationResults.ValidationErrors.Where(x => x.ValidationType == typeof(ScriptableObjectsValidation));
                 var soExpectedErrorsCount = instance.ScriptableObjectErrorsExpectedCount;
 
                 var scenesValidationResultText =

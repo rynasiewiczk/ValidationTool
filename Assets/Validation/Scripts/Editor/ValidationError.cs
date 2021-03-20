@@ -66,22 +66,6 @@ namespace LazySloth.Validation
             return nameWithHierarchy;
         }
 
-        public string GetStack()
-        {
-            var result = "";
-            foreach(var s in Stack)
-            {
-                result += s.ToString();
-
-                if (Stack.Last() != s)
-                {
-                    result += "/";
-                }
-            }
-
-            return result;
-        }
-
         public override string ToString()
         {
             var obj = string.IsNullOrEmpty(_objectName) ? "" : $"{_objectName} -> ";
