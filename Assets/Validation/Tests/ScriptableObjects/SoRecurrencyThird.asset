@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _referenceToFirst: {fileID: 11400000, guid: b6480776b81419a418c90aa417ae7269, type: 2}
   _referenceToSecond: {fileID: 11400000, guid: 67d52c8c24549f24d93450366a68f85c, type: 2}
+  _referenceToThird: {fileID: 11400000}

@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: SoRecurrencySecond
   m_EditorClassIdentifier: 
   _referenceToFirst: {fileID: 11400000, guid: b6480776b81419a418c90aa417ae7269, type: 2}
+  _referenceToSecond: {fileID: 11400000}
   _referenceToThird: {fileID: 11400000, guid: b46e70ffcd32d3342b3e54a8a068546e, type: 2}
