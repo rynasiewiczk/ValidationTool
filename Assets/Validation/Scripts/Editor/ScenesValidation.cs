@@ -31,6 +31,22 @@ namespace LazySloth.Validation
         [ValidateMethod]
         protected override void Validate(ValidationResult result, string startPath, List<string> ignorePaths)
         {
+            if (IsAnyOpenSceneModified())
+            {
+                var popupAnswer = EditorUtility.DisplayDialogComplex("Scenes validation", "Do you want to save open scenes (not saved changes will be discarded)?", "Yes", "No", "Cancel");
+
+                if (popupAnswer == 0) //clicked 'Yes'
+                {
+                    EditorSceneManager.SaveOpenScenes();
+                }
+                else if (popupAnswer == 1) //clicked 'No'
+                { }
+                else if (popupAnswer == 2) //clicked 'Cancel'
+                {
+                    return;
+                }
+            }
+
             var currentScenePath = SceneManager.GetActiveScene().path;
             var allOpenedScenePaths = GetLoadedScenesPaths();
 
@@ -106,17 +122,29 @@ namespace LazySloth.Validation
             }
         }
 
+        private bool IsAnyOpenSceneModified()
+        {
+            var scenes = GetLoadedScenes();
+            return scenes.Any(x => x.isDirty);
+        }
+
         private List<string> GetLoadedScenesPaths()
         {
-            var paths = new List<string>();
+            var scenes = GetLoadedScenes();
+            return scenes.Select(x => x.path).ToList();
+        }
+
+        private List<Scene> GetLoadedScenes()
+        {
+            var scenes = new List<Scene>();
             var sceneCount = SceneManager.sceneCount;
-            
+
             for (int i = 0; i < sceneCount; i++)
             {
-                paths.Add(SceneManager.GetSceneAt(i).path);
+                scenes.Add(SceneManager.GetSceneAt(i));
             }
 
-            return paths;
+            return scenes;
         }
     }
 }
