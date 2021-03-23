@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54cc20cfa96be5045ab6b13c56c9a465, type: 3}
   m_Name: ValidationTestConfig
   m_EditorClassIdentifier: 
-  _sceneErrorsExpectedCount: 11
+  _sceneErrorsExpectedCount: 33
   _prefabErrorsExpectedCount: 7
   _scriptableObjectExpectedCount: 7

@@ -33,7 +33,7 @@
         private static void DisplayExpectationsForTestValidation()
         {
             GUILayout.Space(15);
-            EditorGUILayout.HelpBox("Scenes validation should throw 11 errors in total:" +
+            EditorGUILayout.HelpBox("Scenes validation should throw 33 errors in total. For every one of 3 scenes:" +
                     "\n-4 errors for component references missing in the scene itself" +
                     "\n-4 errors for component references missing in prefab used in the scene" +
                     "\n-3 errors for component references missing in SO referenced in the scene through the prefab", MessageType.Info);

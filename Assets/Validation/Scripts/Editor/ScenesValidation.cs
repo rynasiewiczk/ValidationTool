@@ -32,16 +32,18 @@ namespace LazySloth.Validation
         protected override void Validate(ValidationResult result, string startPath, List<string> ignorePaths)
         {
             var currentScenePath = SceneManager.GetActiveScene().path;
+            var allOpenedScenePaths = GetLoadedScenesPaths();
+
             var scenePaths = EditorHelper.GetAssetsPathsByFilter(ValidationConfig.SCENES_FILTER_KEY,
                 startPath,
                 ignorePaths);
 
             scenePaths = scenePaths.Where(x => !ValidationHelper.Config.OutOfValidationSceneNames.Any(y => x.Contains(y))).ToList();
-            
+
             foreach (var scenePath in scenePaths)
             {
                 EditorUtility.DisplayProgressBar("Validate scenes", scenePath,
-                    (float) scenePaths.IndexOf(scenePath) / scenePaths.Count);
+                    (float)scenePaths.IndexOf(scenePath) / scenePaths.Count);
                 var scene = EditorSceneManager.OpenScene(scenePath);
                 if (!scene.IsValid())
                 {
@@ -92,7 +94,29 @@ namespace LazySloth.Validation
             }
 
             EditorUtility.ClearProgressBar();
-            EditorSceneManager.OpenScene(currentScenePath);
+
+            EditorSceneManager.OpenScene(currentScenePath, OpenSceneMode.Single);
+            foreach (var path in allOpenedScenePaths)
+            {
+                if(EditorSceneManager.GetSceneByPath(path).isLoaded)
+                {
+                    continue;
+                }
+                EditorSceneManager.OpenScene(path, OpenSceneMode.Additive);
+            }
+        }
+
+        private List<string> GetLoadedScenesPaths()
+        {
+            var paths = new List<string>();
+            var sceneCount = SceneManager.sceneCount;
+            
+            for (int i = 0; i < sceneCount; i++)
+            {
+                paths.Add(SceneManager.GetSceneAt(i).path);
+            }
+
+            return paths;
         }
     }
 }
