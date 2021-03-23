@@ -66,7 +66,17 @@ namespace LazySloth.Validation
                 var newVisibleFields = visibleFields.Where(x => !fields.Contains(x));
                 foreach (var fieldData in newVisibleFields)
                 {
-                    fieldInstanceData.Add(new FieldInstanceData(so, fieldData.MemberInfo as FieldInfo, null, fieldData.Value, fieldData.Stack));
+                    object objectToUse;
+                    if(fieldData.Object is Component component)
+                    {
+                        objectToUse = component;
+                    }
+                    else
+                    {
+                        objectToUse = so;
+                    }
+
+                    fieldInstanceData.Add(new FieldInstanceData(objectToUse, fieldData.MemberInfo as FieldInfo, null, fieldData.Value, fieldData.Stack));
                 }
 
                 currentVisibleFields = new List<MemberInfoWithValue>(visibleFields);

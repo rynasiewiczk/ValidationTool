@@ -8,9 +8,17 @@
     public class ValidationTestConfigEditor : Editor
     {
         private static ValidationResult _lastRunValidationResults;
+        private static GUIStyle _guiStyle;
 
         public override void OnInspectorGUI()
         {
+            if(_guiStyle == null)
+            {
+                _guiStyle = GUI.skin.GetStyle("HelpBox");
+                _guiStyle.fontSize = 12;
+                _guiStyle.richText = true;
+            }
+
             base.OnInspectorGUI();
 
             var instance = (ValidationTestConfig)target;
@@ -18,7 +26,27 @@
             GUILayout.Space(15);
 
             SetValidationButton();
+            DisplayExpectationsForTestValidation();
             DrawValidationResults(instance);
+        }
+
+        private static void DisplayExpectationsForTestValidation()
+        {
+            GUILayout.Space(15);
+            EditorGUILayout.HelpBox("Scenes validation should throw 11 errors in total:" +
+                    "\n-4 errors for component references missing in the scene itself" +
+                    "\n-4 errors for component references missing in prefab used in the scene" +
+                    "\n-3 errors for component references missing in SO referenced in the scene through the prefab", MessageType.Info);
+
+            GUILayout.Space(10);
+            EditorGUILayout.HelpBox("Prefabs validation should throw 7 errors in total:" +
+                    "\n-4 errors for component references missing in PrefabTest prefab" +
+                    "\n-3 errors for component references missing in SO referenced through the prefab", MessageType.Info);
+
+            GUILayout.Space(10);
+            EditorGUILayout.HelpBox("SO validation should throw 7 errors in total:" +
+                    "\n-3 errors for component references missing in ScriptableObjectReferenceTest SO" +
+                    "\n-4 errors for component references missing in prefab referenced in ScriptableObjectReferenceTest SO", MessageType.Info);
         }
 
         private void SetValidationButton()
@@ -59,15 +87,14 @@
 
                 GUILayout.Space(15);
 
-                GUIStyle myStyle = GUI.skin.GetStyle("HelpBox");
-                myStyle.fontSize = 13;
-                myStyle.richText = true;
+                
 
-                EditorGUILayout.TextArea(scenesValidationResultText, myStyle);
+                EditorGUILayout.TextArea(scenesValidationResultText, _guiStyle);
+                GUILayout.Space(5);
+                
+                EditorGUILayout.TextArea(prefabsValidationResultText, _guiStyle);
                 GUILayout.Space(10);
-                EditorGUILayout.TextArea(prefabsValidationResultText, myStyle);
-                GUILayout.Space(10);
-                EditorGUILayout.TextArea(soValidationResultText, myStyle);
+                EditorGUILayout.TextArea(soValidationResultText, _guiStyle);
             }
         }
     }
