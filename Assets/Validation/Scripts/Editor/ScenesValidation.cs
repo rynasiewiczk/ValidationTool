@@ -56,6 +56,8 @@ namespace LazySloth.Validation
 
             scenePaths = scenePaths.Where(x => !ValidationHelper.Config.OutOfValidationSceneNames.Any(y => x.Contains(y))).ToList();
 
+            var uniqueInstanceData = new List<FieldInstanceData>();
+
             foreach (var scenePath in scenePaths)
             {
                 EditorUtility.DisplayProgressBar("Validate scenes", scenePath,
@@ -69,26 +71,33 @@ namespace LazySloth.Validation
 
                 var fieldInstanceData = ValidationHelper.GetValidateableFields(scene);
 
-                //Scenes validation needs this explicitly, because we cannot pass all scenes to get fields from them at once.
+                //Scenes validation needs to check for repetitions in every scene, because we cannot pass all scenes to get fields from them at once.
                 //They have to be passed one by one. Because of that, we cannot filter repetitive fields inside the logic
                 //that gets them -> it doesn't have all of them.
-                var uniqueInstanceData =
-                    new List<FieldInstanceData>();
+                var scenesUniqueInstanceData = new List<FieldInstanceData>();
                 foreach (var instanceData in fieldInstanceData)
                 {
-                    if (uniqueInstanceData.Any(x =>
-                        x.Instance == instanceData.Instance && x.FieldInfo == instanceData.FieldInfo && x.Obj == instanceData.Obj))
+                    if (scenesUniqueInstanceData.Any(x => x.Instance == instanceData.Instance && x.FieldInfo == instanceData.FieldInfo && x.Obj == instanceData.Obj))
                     {
                         continue;
                     }
 
-                    uniqueInstanceData.Add(instanceData);
+                    scenesUniqueInstanceData.Add(instanceData);
                 }
+
+                var withError = new List<FieldInstanceData>();
 
                 try
                 {
-                    foreach (var instanceData in uniqueInstanceData)
+                    foreach (var instanceData in scenesUniqueInstanceData)
                     {
+                        if (uniqueInstanceData.Any(x => x.Instance == instanceData.Instance && x.FieldInfo == instanceData.FieldInfo && x.Obj == instanceData.Obj))
+                    {
+                        continue;
+                    }
+
+                        uniqueInstanceData.Add(instanceData);
+
                         if (EditorHelper.UnityObjectIsNull(instanceData.Instance))
                         {
                             var log =
@@ -100,6 +109,8 @@ namespace LazySloth.Validation
                                 $"Field name: {instanceData.FieldInfo.Name}\n";
 
                             result.Add(GetType(), log, instanceData);
+
+                            withError.Add(instanceData);
                         }
                     }
                 }
