@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3d4ab0fb390ee754aa254f4e63287337, type: 3}
-  m_Name: ScriptableObjectReferenceTest
+  m_Name: ScriptableObjectReferenceTest 3
   m_EditorClassIdentifier: 
-  _providedComponent: {fileID: 8124227752714765277, guid: e1b6987c30fbcde47bf27b2c04c35a42,
+  _providedComponent: {fileID: 8124227752714765277, guid: 6eddbabc260bf684e82948498e22f191,
     type: 3}
   _missingComponent: {fileID: 0}
-  _providedPrefab: {fileID: -5740713040287865852, guid: e1b6987c30fbcde47bf27b2c04c35a42,
+  _providedPrefab: {fileID: -5740713040287865852, guid: 6eddbabc260bf684e82948498e22f191,
     type: 3}
   _missingPrefab: {fileID: 0}
   _providedSo: {fileID: 11400000}

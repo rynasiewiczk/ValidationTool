@@ -322,9 +322,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _providedGameObject: {fileID: 1949871730}
   _missingGameObject: {fileID: 0}
-  _providedComponent: {fileID: 1949871731}
+  _providedComponent: {fileID: 8124227752714765277, guid: 483d45454f7de794f8c10847aed05a9c,
+    type: 3}
   _missingComponent: {fileID: 0}
-  _providedPrefab: {fileID: -5740713040287865852, guid: e1b6987c30fbcde47bf27b2c04c35a42,
+  _providedPrefab: {fileID: -5740713040287865852, guid: 483d45454f7de794f8c10847aed05a9c,
     type: 3}
   _missingPrefab: {fileID: 0}
   _providedSo: {fileID: 11400000, guid: db4d4a2de3c78994a98f023bf4ea002b, type: 2}

@@ -46,8 +46,7 @@ namespace LazySloth.Validation
                 }
             }
 
-            var fieldInstanceData = new List<FieldInstanceData>();
-            fieldInstanceData.AddRange(ValidationHelper.GetValidateableFields(allSo));
+            var fieldInstanceData = ValidationHelper.GetValidateableFields(allSo);
 
             try
             {

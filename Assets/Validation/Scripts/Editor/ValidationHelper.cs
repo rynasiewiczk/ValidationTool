@@ -66,6 +66,11 @@ namespace LazySloth.Validation
                 var newVisibleFields = visibleFields.Where(x => !fields.Contains(x));
                 foreach (var fieldData in newVisibleFields)
                 {
+                    if (fieldInstanceData.Any(x => x.Instance == fieldData.Value && x.FieldInfo == fieldData.MemberInfo && x.Obj == fieldData.Object))
+                    {
+                        continue;
+                    }
+
                     object objectToUse;
                     if(fieldData.Object is Component component)
                     {
@@ -75,6 +80,8 @@ namespace LazySloth.Validation
                     {
                         objectToUse = so;
                     }
+
+                    
 
                     fieldInstanceData.Add(new FieldInstanceData(objectToUse, fieldData.MemberInfo as FieldInfo, null, fieldData.Value, fieldData.Stack));
                 }
@@ -116,6 +123,11 @@ namespace LazySloth.Validation
                 visibleFields = GetFieldsVisibleInInspectorRecursive(component, visibleFields, new List<object>());
                 foreach (var fieldData in visibleFields)
                 {
+                    if(fieldInstanceData.Any(x => x.Instance == fieldData.Value && x.FieldInfo == fieldData.MemberInfo && x.Obj == fieldData.Object))
+                    {
+                        continue;
+                    }
+
                     var componentToUse = fieldData.Object is Component objectsComponent ? objectsComponent : component;
                     fieldInstanceData.Add(new FieldInstanceData(componentToUse, fieldData));
                 }
