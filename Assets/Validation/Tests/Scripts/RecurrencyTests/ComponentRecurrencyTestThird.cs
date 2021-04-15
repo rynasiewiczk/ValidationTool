@@ -2,7 +2,6 @@
 {
     using UnityEngine;
 
-    [CreateAssetMenu(fileName = "ValidationTestComponentThird", menuName = "Validation/Test/ComponentThird")]
     public class ComponentRecurrencyTestThird : MonoBehaviour
     {
         [SerializeField] private ComponentRecurrencyTestFirst _referenceToFirst = default;

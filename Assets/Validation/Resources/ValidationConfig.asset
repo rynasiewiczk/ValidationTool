@@ -16,6 +16,7 @@ MonoBehaviour:
   ProjectMainFolderPath: Assets/
   OutOfValidationPaths:
   - Assets/Validation/Tests
+  - Assets/AddressableAssetsData
   OutOfValidationComponentTypes: []
   OutOfValidationNamespaces:
   - UnityEngine

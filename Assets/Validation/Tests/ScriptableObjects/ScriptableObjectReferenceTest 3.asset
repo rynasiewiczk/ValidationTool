@@ -12,10 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d4ab0fb390ee754aa254f4e63287337, type: 3}
   m_Name: ScriptableObjectReferenceTest 3
   m_EditorClassIdentifier: 
-  _providedComponent: {fileID: 8124227752714765277, guid: 6eddbabc260bf684e82948498e22f191,
-    type: 3}
-  _missingComponent: {fileID: 0}
-  _providedPrefab: {fileID: -5740713040287865852, guid: 6eddbabc260bf684e82948498e22f191,
+  _providedPrefab: {fileID: 5085622109524224894, guid: bab66d8b1833fb549b00dd7f69944f81,
     type: 3}
   _missingPrefab: {fileID: 0}
   _providedSo: {fileID: 11400000}
