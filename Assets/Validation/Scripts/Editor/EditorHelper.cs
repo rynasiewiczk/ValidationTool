@@ -89,16 +89,37 @@ namespace LazySloth.Validation
             {
                 return unityObject == null;
             }
-            
-            if (obj is String s)
+
+            if (obj is string s)
             {
-                if (String.IsNullOrEmpty(s))
+                if (string.IsNullOrEmpty(s))
                 {
                     return true;
                 }
             }
-            
+
+            if (ValidationHelper.IsObjectAssetReferenceType(obj))
+            {
+                var objType = obj?.GetType();
+                if (obj?.GetType().Name == ValidationHelper.AssetReferenceTypeName)
+                {
+                    var assetProperty = objType.GetProperty("Asset");
+                    var assetPropertyValue = assetProperty?.GetValue(obj);
+
+                    var assetGUIDProperty = objType.GetProperty("AssetGUID");
+                    var assetGUIDPropertyValue = assetGUIDProperty?.GetValue(obj);
+
+                    if (assetGUIDPropertyValue != null)
+                    {
+                        var guid = assetGUIDPropertyValue as string;
+                        return assetPropertyValue == null && string.IsNullOrEmpty(guid);
+                    }
+                }
+            }
+
             return obj == null;
         }
+
+        
     }
 }

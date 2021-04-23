@@ -5,6 +5,7 @@ namespace LazySloth.Validation
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
+    using UnityEditor.Callbacks;
     using UnityEngine;
     using UnityEngine.SceneManagement;
 
@@ -40,6 +41,15 @@ namespace LazySloth.Validation
 
                 return _config;
             }
+        }
+
+        public static string AssetReferenceTypeName => "AssetReference";
+        private static bool AssetReferenceTypeExists = false;
+
+        [DidReloadScripts]
+        private static void Reload()
+        {
+            AssetReferenceTypeExists = false;
         }
 
         public static List<FieldInstanceData> GetValidateableFields(List<ScriptableObject> sos)
@@ -230,7 +240,10 @@ namespace LazySloth.Validation
                         }
                     }
 
-                    listOfFieldInfos = GetFieldsVisibleInInspectorRecursive(fieldValue, listOfFieldInfos, stack);
+                    if (!IsObjectAssetReferenceType(fieldValue))
+                    {
+                        listOfFieldInfos = GetFieldsVisibleInInspectorRecursive(fieldValue, listOfFieldInfos, stack); // in AddressableReference there are fields empty by default, and we don't want to include them
+                    }
                 }
             }
 
@@ -251,6 +264,33 @@ namespace LazySloth.Validation
             }
 
             return validationMethods;
+        }
+
+        public static bool IsObjectAssetReferenceType(object obj)
+        {
+            if (AssetReferenceTypeExists)
+            {
+                return IsObjectOfTheType();
+            }
+
+            var t = (from assembly in AppDomain.CurrentDomain.GetAssemblies()
+                     from type in assembly.GetTypes()
+                     where type.Name == AssetReferenceTypeName
+                     select type).FirstOrDefault();
+
+            if (t != null)
+            {
+                AssetReferenceTypeExists = true;
+                return IsObjectOfTheType();
+            }
+
+            bool IsObjectOfTheType()
+            {
+                var objType = obj?.GetType();
+                return obj?.GetType().Name == AssetReferenceTypeName;
+            }
+
+            return false;
         }
 
         #region Validateable checks
