@@ -16,7 +16,7 @@ namespace LazySloth.Validation
         public string ProjectMainFolderPath = "Assets/";
 
         public List<string> OutOfValidationPaths = new List<string>();
-        public List<string> OutOfValidationComponentTypes = new List<string>();
+        public List<string> OutOfValidationComponentTypeNames = new List<string>();
 
         public List<string> OutOfValidationNamespaces = new List<string>
         {

@@ -298,7 +298,7 @@ namespace LazySloth.Validation
         public static bool IsTypeValidateable(Type type)
         {
             var validNamespace = IsNamespaceValidateable(type);
-            var result = validNamespace && !Config.OutOfValidationComponentTypes.Contains(type.FullName);
+            var result = validNamespace && !Config.OutOfValidationComponentTypeNames.Contains(type.FullName);
             
             return result;
         }
@@ -312,13 +312,13 @@ namespace LazySloth.Validation
             }
 
             var validNamespace = IsNamespaceValidateable(component.GetType());
-            var validType = !Config.OutOfValidationComponentTypes.Contains(component.name);
+            var validType = !Config.OutOfValidationComponentTypeNames.Contains(component.name);
             return validNamespace && validType;
         }
 
         private static bool IsFieldValidateable(FieldInfo fieldInfo)
         {
-            var validType = !Config.OutOfValidationComponentTypes.Contains(fieldInfo.FieldType.Name);
+            var validType = !Config.OutOfValidationComponentTypeNames.Contains(fieldInfo.FieldType.Name);
             var hasOptionalFieldAttribute = EditorHelper.HasCustomAttribute<OptionalObjectFieldAttribute>(fieldInfo);
 
             return validType && !hasOptionalFieldAttribute;

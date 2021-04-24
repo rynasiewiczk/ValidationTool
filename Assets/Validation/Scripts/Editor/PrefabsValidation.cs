@@ -33,7 +33,7 @@ namespace LazySloth.Validation
                 startPath,
                 ignorePaths);
 
-            //todo: chanfe 'Contains' to 'EndsWith'?
+            //todo: change 'Contains' to 'EndsWith'?
             var abstractPaths = prefabPaths.Where(x => x.Contains("Abstract")).ToList();
             foreach (var abstractPath in abstractPaths)
             {
