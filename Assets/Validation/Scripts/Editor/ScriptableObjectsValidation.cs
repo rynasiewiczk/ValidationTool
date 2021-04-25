@@ -7,7 +7,7 @@ namespace LazySloth.Validation
 
     public class ScriptableObjectsValidation : BaseValidation
     {
-        [MenuItem("Validation/ScriptableObjects")]
+        [MenuItem("Tools/ValidationTool/ScriptableObjects")]
         public static void RunValidation()
         {
             var instance = new ScriptableObjectsValidation();

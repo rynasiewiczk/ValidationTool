@@ -8,7 +8,7 @@ namespace LazySloth.Validation
 
     public class FullValidation
     {
-        [MenuItem("Validation/Validate everything", false, -1)]
+        [MenuItem("Tools/ValidationTool/Validate everything", false, -1)]
         public static void RunValidation()
         {
             var result = new ValidationResult("<b>Global validation</b>");

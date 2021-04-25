@@ -17,7 +17,7 @@ MonoBehaviour:
   OutOfValidationPaths:
   - Assets/Validation/Tests
   - Assets/AddressableAssetsData
-  OutOfValidationComponentTypes: []
+  OutOfValidationComponentTypeNames: []
   OutOfValidationNamespaces:
   - UnityEngine
   - TMPro

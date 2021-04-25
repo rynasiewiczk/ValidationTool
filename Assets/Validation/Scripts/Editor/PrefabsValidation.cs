@@ -8,7 +8,7 @@ namespace LazySloth.Validation
 
     public class PrefabsValidation : BaseValidation
     {
-        [MenuItem("Validation/Prefabs")]
+        [MenuItem("Tools/ValidationTool/Prefabs")]
         public static void RunValidation()
         {
             var instance = new PrefabsValidation();

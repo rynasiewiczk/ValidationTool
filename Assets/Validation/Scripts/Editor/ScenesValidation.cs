@@ -10,7 +10,7 @@ namespace LazySloth.Validation
 
     public class ScenesValidation : BaseValidation
     {
-        [MenuItem("Validation/Scenes")]
+        [MenuItem("Tools/ValidationTool/Scenes")]
         public static void RunValidation()
         {
             var instance = new ScenesValidation();

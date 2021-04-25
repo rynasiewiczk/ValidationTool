@@ -22,7 +22,7 @@
             }
         }
 
-        [MenuItem("Validation/Tests/Run tests %#&v")]
+        [MenuItem("Tools/ValidationTool/Tests/Run tests %#&v")]
         public static ValidationResult RunTests()
         {
             var result = new ValidationResult("<b>Validation test run</b>");
@@ -38,21 +38,21 @@
             return result;
         }
 
-        [MenuItem("Validation/Tests/Run tests for scenes")]
+        [MenuItem("Tools/ValidationTool/Tests/Run tests for scenes")]
         private static void RunTests_Scenes()
         {
             var instance = new ScenesValidation();
             instance.RunValidation(Config.GetFolderPath(), new List<string>());
         }
 
-        [MenuItem("Validation/Tests/Run tests for prefabs")]
+        [MenuItem("Tools/ValidationTool/Tests/Run tests for prefabs")]
         private static void RunTests_Prefabs()
         {
             var instance = new PrefabsValidation();
             instance.RunValidation(Config.GetFolderPath(), new List<string>());
         }
 
-        [MenuItem("Validation/Tests/Run tests for SOs")]
+        [MenuItem("Tools/ValidationTool/Tests/Run tests for SOs")]
         private static void RunTests_ScriptableObjects()
         {
             var instance = new ScriptableObjectsValidation();
