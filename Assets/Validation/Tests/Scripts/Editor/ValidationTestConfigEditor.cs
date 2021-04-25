@@ -33,20 +33,13 @@
         private static void DisplayExpectationsForTestValidation()
         {
             GUILayout.Space(15);
-            EditorGUILayout.HelpBox("Scenes validation should throw 19 errors in total. For every one of 3 scenes:" +
-                    "\n-13 errors for component references missing in the scene itself" +
-                    "\n-4 errors for component references missing in prefab used in the scenes" +
-                    "\n-4 errors for component references missing in SO referenced in the scenes through the prefab", MessageType.Info);
+            EditorGUILayout.HelpBox("Scenes validation should throw 34 errors in total. It includes components missing from the scenes, prefabs referenced in the scenes, and SOs referenced by the prefabs", MessageType.Info);
 
             GUILayout.Space(10);
-            EditorGUILayout.HelpBox("Prefabs validation should throw 7 errors in total:" +
-                    "\n-4 errors for component references missing in PrefabTest prefab" +
-                    "\n-3 errors for component references missing in SO referenced through the prefab", MessageType.Info);
+            EditorGUILayout.HelpBox("Prefabs validation should throw 18 errors in total. It includes components missing from the prefabs and SOs referenced by them", MessageType.Info);
 
             GUILayout.Space(10);
-            EditorGUILayout.HelpBox("SO validation should throw 7 errors in total:" +
-                    "\n-3 errors for component references missing in ScriptableObjectReferenceTest SO" +
-                    "\n-4 errors for component references missing in prefab referenced in ScriptableObjectReferenceTest SO", MessageType.Info);
+            EditorGUILayout.HelpBox("SO validation should throw 6 errors in total. It includes components missing from the SOs and prefabs referenced from them", MessageType.Info);
         }
 
         private void SetValidationButton()
