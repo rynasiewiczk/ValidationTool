@@ -11,6 +11,9 @@ The tool also gives you a way to create your own methods that can be fired along
 While it's not a big issue to keep track of your project within a small team, it grows to a significant challenge along with the team's size. 
 When you have dozens of engineers, artists, designers, and other people providing their work to the main branch, it gets impossible for humans to check all this content before it gets in. And even though it's the person's responsibility to check the content before pushing it forward, we're all only human and we all make simple mistakes once in a while.
 
+### Instalation
+Download `Validation` folder and place it inside your project.
+
 ### How to use it
 To run a validation process, simply select `Tools -> ValidationTool -> Validate Everything`. This way the tool will go through all the scenes, prefabs, and scriptable objects, starting from a folder specified in the `ValidationConfig` asset. By default, the starting path is simply `Assets/`, but I find it a good practice to keep all of your project assets (except for plugins, frameworks, etc.) inside a folder inside it: `Assets/YourProjectAssets/`, to keep the hierarchy cleaner.
 If you want to add your own method to a validation process, you should add a class that inherits from `BaseValidation`, and decorate your overridden `Validate` method with `ValidateMethodAttribute`. This way the method will be included in the process of validating your project.
