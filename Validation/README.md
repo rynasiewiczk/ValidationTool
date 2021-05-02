@@ -9,7 +9,7 @@ The tool also gives you a way to create your own methods that can be fired along
 
 ### Why to use it
 While it's not a big issue to keep track of your project within a small team, it grows to a significant challenge along with the team's size. 
-When you have dozens of engineers, artists, designers, and other people providing their work to the main branch, it gets impossible for humans to check all this content before it gets in. And even though it's the person's responsibility to check the content before pushing it forward, we're all only human and we all make simple mistakes once in a while.
+When you have group of engineers, artists, designers, and other people providing their work to the main branch, it gets impossible for humans to check all this content before it gets in. And even though it's the person's responsibility to check the content before pushing it forward, we're all only human and we all make simple mistakes once in a while.
 
 ### Instalation
 Download `Validation` folder and place it inside your project.
